@@ -14,8 +14,12 @@ load_dotenv()
 # ---- STEP 1: Load all .txt files and split into chunks ----
 all_chunks = []
 
-# for(open) all the files in the current directory
-for filename in os.listdir("."):
+st.write(f"Current working directory: {os.getcwd()}")
+st.write(f"Visible files: {os.listdir('.')}")
+
+base_dir = "."  # or "ragfiles"
+
+for filename in os.listdir(base_dir):
     # (called filename) in read mode ("r") using UTF-8 encoding (so all letters, symbols, accents display correctly).
     # While the file is open, call it f. When I’m done inside this block, automatically close the file for me.
 
@@ -23,7 +27,8 @@ for filename in os.listdir("."):
         # Look at every file in this folder, one at a time, and call it filename.
         # Then check if it’s a .txt file before reading it.”
 
-        with open(filename, "r", encoding="utf-8") as f:
+        filepath = os.path.join(base_dir, filename)
+        with open(filepath, "r", encoding="utf-8") as f:
             # ""“Open this text file (called filename) in read mode ("r")
             #  using UTF-8 encoding (so all letters, symbols, accents display correctly).
             #  While the file is open, call it (temporary name (f)).
@@ -39,6 +44,10 @@ for filename in os.listdir("."):
             chunks = splitter.split_text(text)
             all_chunks.extend(chunks)
             # Take all chunks and make it a flat list .extend() instead of a nested list .append()
+
+if not all_chunks:
+    st.error("No text chunks were loaded. Please check the directory and .txt files.")
+    st.stop()
 
 # ---- STEP 2: Convert chunks into embeddings ----
 embedder = SentenceTransformer("all-MiniLM-L6-v2")

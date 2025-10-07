@@ -52,7 +52,6 @@ index = faiss.IndexFlatL2(dim)
 index.add(embeddings)
 
 # ---- STEP 4: Set OpenAI API key from environment variable ----
-# openai.api_key = "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"
 openai.api_key = os.getenv("OPENAI_API_KEY")
 if not openai.api_key:
     st.error("Missing OpenAI API key. Please check your .env file.")

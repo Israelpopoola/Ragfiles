@@ -14,6 +14,7 @@ load_dotenv()
 # ---- STEP 1: Load all .txt files and split into chunks ----
 all_chunks = []
 
+# debugging streamlit problem
 st.write(f"Current working directory: {os.getcwd()}")
 st.write(f"Visible files: {os.listdir('.')}")
 
@@ -40,7 +41,8 @@ for filename in os.listdir(base_dir):
 
             text = f.read().strip()  # read and strip it of all the white extra white space
             splitter = RecursiveCharacterTextSplitter(
-                chunk_size=300, chunk_overlap=20)  # chunk it
+                chunk_size=300, chunk_overlap=20),   # chunk it
+            separators = ["\n\n", "\n", ".", " "]
             chunks = splitter.split_text(text)
             all_chunks.extend(chunks)
             # Take all chunks and make it a flat list .extend() instead of a nested list .append()

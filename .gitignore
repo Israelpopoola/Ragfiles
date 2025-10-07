@@ -4,6 +4,7 @@ __pycache__/
 *.pyd
 .DS_Store
 apikey.txt
+NOTRIGHT.py
 .env
 *.faiss
 *.bin
